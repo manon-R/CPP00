@@ -56,7 +56,7 @@ int	main(void)
 		if (input == "SEARCH" || input == "search")
 			std::cout << "This is the search command" << std::endl;
 		if (input == "ADD" || input == "add")
-			std::cout << "This is the add command" << std::endl;
+			test.add_contact();
 		std::cout << "Please enter one of the following command : SEARCH, ADD or EXIT" << std::endl;
 		std::cout << "=> ";
 		std::cin >> input;
