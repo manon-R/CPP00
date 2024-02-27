@@ -14,6 +14,7 @@ public:
 
 	void add_contact();
 	void search_contact(int index);
+	void display_all(void);
 
 private:
 
@@ -21,7 +22,7 @@ private:
 	int		size_content;
 	int		oldest_id;
 
-	void display_all(void);
+	void display_row(int);
 };
 
 #endif

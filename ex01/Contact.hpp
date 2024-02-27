@@ -22,6 +22,21 @@ public:
 
 	void contact_form(void);
 
+	std::string get_first_name(void) const;
+	std::string get_last_name(void) const;
+	std::string get_nickname(void) const;
+	std::string get_number(void) const;
+	std::string get_darkest_secret(void) const;
+
+
+	void set_first_name(std::string value);
+	void set_last_name(std::string value);
+	void set_nickname(std::string value);
+	void set_number(std::string value);
+	void set_darkest_secret(std::string value);
+
+
+
 private:
 
 	std::string first_name;
