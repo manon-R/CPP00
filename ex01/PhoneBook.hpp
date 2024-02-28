@@ -11,9 +11,9 @@ public:
 	~PhoneBook(void);
 
 	int	get_sizecontent(void);
+	int search(void);
 
-	void add_contact();
-	void search_contact(int index);
+	void add_contact(void);
 	void display_all(void);
 
 private:
@@ -22,7 +22,8 @@ private:
 	int		size_content;
 	int		oldest_id;
 
-	void display_row(int);
+	void display_row(int index);
+	void search_contact(int index);
 };
 
 #endif

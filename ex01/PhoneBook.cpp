@@ -1,10 +1,15 @@
 #include <iostream>
 #include <iomanip>
+#include <limits>
 #include "PhoneBook.hpp"
 
 using std::cout;
+using std::cin;
 using std::endl;
 using std::string;
+
+#define  CTRL_D			"FORCED EXIT"
+#define  VALID_INDEX	"Please enter valid index "
 
 static void display_space(int nb)
 {
@@ -54,6 +59,38 @@ void PhoneBook::add_contact()
 	contactList[index].contact_form();
 	size_content = (size_content == 8) ? size_content : (size_content + 1);
 	cout << GREEN << "Contact n*" << size_content << " added with success" << RESET << endl;
+}
+
+int PhoneBook::search()
+{
+	int			index;
+
+	if (get_sizecontent() == 0)
+		cout << "PhoneBook is empty ..."<< endl;
+	else
+	{
+		display_all();
+		do
+		{
+			cout << "Please enter the index of the entry to display: [0-" << (get_sizecontent() - 1) << "]: ";
+			cin >> index;
+			if (cin.eof())
+			{
+				cout << endl;
+				cout << RED << CTRL_D << RESET << endl;
+				return -1;
+			}
+			if (cin.fail())
+			{
+				cout << RED << VALID_INDEX << RESET << endl;
+				cin.clear();
+				index = -1;
+			}
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		} while (index < 0 || index > (get_sizecontent() - 1));
+		search_contact(index);
+	}
+	return 0;
 }
 
 void PhoneBook::search_contact(int index)
