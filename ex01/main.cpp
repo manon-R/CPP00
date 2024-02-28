@@ -2,96 +2,90 @@
 #include "Contact.hpp"
 #include <iostream>
 #include <string>
+#include <limits>
+
+using std::cout;
+using std::cin;
+using std::endl;
+using std::string;
 
 #define  CTRL_D			"FORCED EXIT"
 #define  VALID_INDEX	"Please enter valid index "
 
 int	main(void)
 {
-	std::string input;
 	int			index;
 
-	std::cout << CYAN << "********** PhoneBook **********" << RESET << std::endl;
-	std::cout << std::endl;
+	cout << CYAN << "********** PhoneBook **********" << RESET << endl;
+	cout << endl;
 	
-	PhoneBook test;
-	std::cout << std::endl;
+	PhoneBook phonebook;
+	cout << endl;
 
-	std::cout << CYAN << "**** Welcome in my crappy awesome phonebook software ****" << RESET << std::endl;
-	std::cout << std::endl;
-	std::cout << "Please enter one of the following command : SEARCH, ADD or EXIT" << std::endl;
-	std::cout << "=> ";
-	std::cin >> input;
-	if (!std::cin.good())
+	cout << CYAN << "**** Welcome in my crappy awesome phonebook software ****" << RESET << endl;
+	cout << endl;
+	while (true)
 	{
-		std::cout << std::endl;
-		std::cout << RED << CTRL_D << RESET << std::endl;
-		return 0;
-	}
-	while (input != "EXIT" && input != "exit")
-	{
-		if (input != "SEARCH" && input != "ADD" && input != "search" && input != "add")
+		string input;
+		while (input.empty() == true)
 		{
-			std::cout << "Please enter a VALID command : " << std::endl;
-			std::cout << GREEN <<"ADD" << RESET << " to save a new contact" << std::endl;
-			std::cout  << GREEN << "SEARCH" << RESET << " to display specific contact" << std::endl;
-			std::cout << "or" << GREEN <<"EXIT" << RESET <<" to quit this wonderful phonenook app" << std::endl;
-			std::cout << std::endl;
-			std::cout << "=> ";
-			std::cin >> input;
-			if (!std::cin.good())
+			cout << "Please enter one of the following command : SEARCH, ADD or EXIT" << endl;
+			cout << "=> ";
+			std::getline(std::cin, input);
+			if (!cin.good())
 			{
-				std::cout << std::endl;
-				std::cout << RED << CTRL_D << RESET << std::endl;
+				cout << endl;
+				cout << RED << CTRL_D << RESET << endl;
 				return 0;
 			}
+		}
+		if (input == "EXIT" || input == "exit")
+			break;
+		if (input != "SEARCH" && input != "ADD" && input != "search" && input != "add")
+		{
+			cout << "Please enter a VALID command : " << endl;
+			cout << GREEN <<"ADD" << RESET << " to save a new contact" << endl;
+			cout  << GREEN << "SEARCH" << RESET << " to display specific contact" << endl;
+			cout << "or " << GREEN <<"EXIT" << RESET <<" to quit this wonderful phonenook app" << endl;
+			cout << endl;
 			continue ;
 		}
 		if (input == "SEARCH" || input == "search")
 		{
-			if (test.get_sizecontent() == 0)
-				std::cout << "PhoneBook is empty ..."<< std::endl;
+			if (phonebook.get_sizecontent() == 0)
+				cout << "PhoneBook is empty ..."<< endl;
 			else
 			{
-				test.display_all();
+				phonebook.display_all();
 				do
 				{
-					std::cout << "Please enter the index of the entry to display: [0-" << (test.get_sizecontent() - 1) << "]: ";
-					std::cin >> index;
-					if (std::cin.fail())
+					cout << "Please enter the index of the entry to display: [0-" << (phonebook.get_sizecontent() - 1) << "]: ";
+					cin >> index;
+
+					if (cin.eof())
 					{
-						std::cout << RED << VALID_INDEX << RESET << std::endl;
-						std::cin.clear();
-						std::cin.ignore();
-						index = -1;
-					}
-					if (!std::cin.good())
-					{
-						std::cout << std::endl;
-						std::cout << RED << CTRL_D << RESET << std::endl;
+						cout << endl;
+						cout << RED << CTRL_D << RESET << endl;
 						return 0;
 					}
-				} while (index < 0 || index > (test.get_sizecontent() - 1));
-				test.search_contact(index);
+					if (cin.fail())
+					{
+						cout << RED << VALID_INDEX << RESET << endl;
+						cin.clear();
+						index = -1;
+					}
+					cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				} while (index < 0 || index > (phonebook.get_sizecontent() - 1));
+				phonebook.search_contact(index);
 			}
 		}
-		if (input == "ADD" || input == "add")
-			test.add_contact();
-		std::cout << std::endl;
-		std::cout << "Please enter one of the following command : SEARCH, ADD or EXIT" << std::endl;
-		std::cout << "=> ";
-		std::cin >> input;
-		if (!std::cin.good())
-		{
-			std::cout << std::endl;
-			std::cout << RED << CTRL_D << RESET << std::endl;
-			return 0;
-		}
+		else if (input == "ADD" || input == "add")
+			phonebook.add_contact();
+		cout << endl;
 	}
-
-	std::cout << std::endl;
-	std::cout << CYAN << "**** Bye Bye Phonebook User ! ****" << RESET << std::endl;
-	std::cout << std::endl;
+	cout << endl;
+	cout << CYAN << "**** Bye Bye Phonebook User ! ****" << RESET << endl;
+	cout << endl;
 	
 	return 0;
 }
